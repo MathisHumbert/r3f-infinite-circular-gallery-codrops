@@ -1,0 +1,28 @@
+const images = [
+  { image: 'img/1.jpg', text: 'New Synagogue' },
+  { image: 'img/2.jpg', text: 'Paro Taktsang' },
+  { image: 'img/3.jpg', text: 'Petra' },
+  { image: 'img/4.jpg', text: 'Gooderham Building' },
+  { image: 'img/5.jpg', text: 'Catherine Palace' },
+  { image: 'img/6.jpg', text: 'Sheikh Zayed Mosque' },
+  { image: 'img/7.jpg', text: 'Madonna Corona' },
+  { image: 'img/8.jpg', text: 'Plaza de Espana' },
+  { image: 'img/9.jpg', text: 'Saint Martin' },
+  { image: 'img/10.jpg', text: 'Tugela Falls' },
+  { image: 'img/11.jpg', text: 'Sintra-Cascais' },
+  { image: 'img/12.jpg', text: "The Prophet's Mosque" },
+  { image: 'img/1.jpg', text: 'New Synagogue' },
+  { image: 'img/2.jpg', text: 'Paro Taktsang' },
+  { image: 'img/3.jpg', text: 'Petra' },
+  { image: 'img/4.jpg', text: 'Gooderham Building' },
+  { image: 'img/5.jpg', text: 'Catherine Palace' },
+  { image: 'img/6.jpg', text: 'Sheikh Zayed Mosque' },
+  { image: 'img/7.jpg', text: 'Madonna Corona' },
+  { image: 'img/8.jpg', text: 'Plaza de Espana' },
+  { image: 'img/9.jpg', text: 'Saint Martin' },
+  { image: 'img/10.jpg', text: 'Tugela Falls' },
+  { image: 'img/11.jpg', text: 'Sintra-Cascais' },
+  { image: 'img/12.jpg', text: "The Prophet's Mosque" },
+];
+
+export default images;

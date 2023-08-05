@@ -1,0 +1,166 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: calc(100vw / 1920 * 10);
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  user-select: none;
+}
+
+body {
+  background: #cbcabd;
+  color: #545050;
+  font-family: 'halyard-display', sans-serif;
+  font-size: 15px;
+  margin: 0;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  overscroll-behavior-y: none;
+  height: 100vh;
+}
+
+#root {
+  width: 100%;
+  height: 100vh;
+}
+
+canvas {
+  height: 100vh;
+  opacity: 0;
+  transition: opacity 1s ease;
+}
+
+.loaded canvas {
+  opacity: 1;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+  outline: none;
+  position: relative;
+  overflow: hidden;
+}
+
+a::after {
+  content: ' ';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: right center;
+  transition: transform 0.4s ease;
+  will-change: transform;
+}
+
+a:hover::after {
+  transform: scaleX(1);
+  transform-origin: left center;
+}
+
+/* 
+FRAME
+*/
+.frame {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+  padding: 3rem;
+  font-size: 15px;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.loaded .frame {
+  opacity: 1;
+}
+
+@media screen and (min-width: 53rem) {
+  .frame {
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+    align-items: flex-start;
+  }
+}
+
+.frame__titles {
+  display: flex;
+  text-align: center;
+  flex-direction: column;
+  gap: 15px;
+}
+
+@media screen and (min-width: 53rem) {
+  .frame__titles {
+    flex-direction: row;
+    gap: 1rem;
+  }
+}
+
+.frame__title {
+  font-size: 15px;
+  font-weight: normal;
+}
+
+.frame__text {
+  opacity: 1;
+}
+
+@media screen and (min-width: 53rem) {
+  .frame__text {
+    opacity: 0.5;
+  }
+}
+
+.frame__links a:not(:last-child) {
+  margin-right: 15px;
+}
+
+/* 
+Loader
+*/
+body::after {
+  content: '';
+  position: fixed;
+  z-index: 1000;
+  top: 50%;
+  left: 50%;
+  width: 60px;
+  height: 60px;
+  margin: -30px 0 0 -30px;
+  border-radius: 50%;
+  opacity: 0.4;
+  background: #545050;
+  animation: loaderAnim 0.7s linear infinite alternate forwards;
+  transition: opacity 0.4s ease;
+}
+
+body.loaded::after {
+  animation-play-state: paused;
+  opacity: 0;
+}
+
+@keyframes loaderAnim {
+  to {
+    opacity: 1;
+    transform: scale3d(0.5, 0.5, 1);
+  }
+}
