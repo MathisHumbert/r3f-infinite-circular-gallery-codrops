@@ -4,18 +4,21 @@ import { useFrame, useThree } from '@react-three/fiber';
 
 import vertex from './shaders/vertex.glsl';
 import fragment from './shaders/fragment.glsl';
+import useScrollStore from './store/scrollStore';
+import { map } from './utils';
 
 export default function Media({ geometry, image, text, index, length }) {
   const x = useRef(0);
   const widthTotal = useRef(0);
   const extra = useRef(0);
+  const isAfter = useRef(false);
+  const isBefore = useRef(false);
   const meshRef = useRef();
   const { viewport, size } = useThree();
   const texture = useTexture(image);
-
-  if (index === 0) {
-    console.log('render');
-  }
+  const scroll = useScrollStore((state) => state.scroll);
+  const direction = useScrollStore((state) => state.direction);
+  const speed = useScrollStore((state) => state.speed);
 
   useEffect(() => {
     if (meshRef.current === undefined) return;
@@ -26,8 +29,6 @@ export default function Media({ geometry, image, text, index, length }) {
     };
 
     const scale = size.height / 1500;
-
-    console.log(viewport.width, viewport.height);
 
     meshRef.current.scale.x = (viewport.width * (700 * scale)) / size.width;
     meshRef.current.scale.y = (viewport.height * (900 * scale)) / size.height;
@@ -56,6 +57,8 @@ export default function Media({ geometry, image, text, index, length }) {
           },
         },
         uViewportSizes: { value: { x: viewport.width, y: viewport.height } },
+        uTime: { value: 0 },
+        uSpeed: { value: 0 },
       },
       vertexShader: vertex,
       fragmentShader: fragment,
@@ -63,7 +66,42 @@ export default function Media({ geometry, image, text, index, length }) {
   }, [texture]);
 
   useFrame(() => {
-    meshRef.current.position.x = x.current;
+    meshRef.current.material.uniforms.uTime.value += 0.04;
+    meshRef.current.material.uniforms.uSpeed.value = speed;
+
+    meshRef.current.position.x = x.current - scroll * 0.5 - extra.current;
+    meshRef.current.position.y =
+      Math.cos((meshRef.current.position.x / widthTotal.current) * Math.PI) *
+        75 -
+      75;
+
+    meshRef.current.rotation.z = map(
+      meshRef.current.position.x,
+      -widthTotal.current,
+      widthTotal.current,
+      Math.PI,
+      -Math.PI
+    );
+
+    const planeOffset = meshRef.current.scale.x / 2;
+
+    isBefore.current =
+      meshRef.current.position.x + planeOffset < -viewport.width;
+    isAfter.current = meshRef.current.position.x - planeOffset > viewport.width;
+
+    if (direction === 'right' && isBefore.current) {
+      extra.current -= widthTotal.current;
+
+      isAfter.current = false;
+      isBefore.current = false;
+    }
+
+    if (direction === 'left' && isAfter.current) {
+      extra.current += widthTotal.current;
+
+      isAfter.current = false;
+      isBefore.current = false;
+    }
   });
 
   return (
