@@ -3,12 +3,12 @@ import * as THREE from 'three';
 import { useFrame, useThree } from '@react-three/fiber';
 import NormalizeWheel from 'normalize-wheel';
 import debounce from 'lodash/debounce';
-import Media from './Media';
+
+import GalleryItem from './GalleryItem';
+import Background from './Background';
 import useScrollStore from './store/scrollStore';
 import { lerp } from './utils';
 import images from './data/images';
-
-const planeGeometry = new THREE.PlaneGeometry(1, 1, 100, 50);
 
 export default function App() {
   const scroll = useRef({
@@ -22,10 +22,13 @@ export default function App() {
   });
   const isDown = useRef(false);
   const mediaWidth = useRef(0);
+
   const { viewport, size } = useThree();
   const setScroll = useScrollStore((state) => state.setScroll);
   const setDirection = useScrollStore((state) => state.setDirection);
   const setSpeed = useScrollStore((state) => state.setSpeed);
+
+  const planeGeometry = new THREE.PlaneGeometry(1, 1, 100, 50);
 
   useEffect(() => {
     window.addEventListener('resize', onResize);
@@ -136,15 +139,17 @@ export default function App() {
   return (
     <>
       {images.map(({ image, text }, index) => (
-        <Media
+        <GalleryItem
           key={index}
           geometry={planeGeometry}
           image={image}
-          text={text}
+          title={text}
+          number={index % (images.length / 2)}
           index={index}
           length={images.length}
         />
       ))}
+      <Background />
     </>
   );
 }
