@@ -43,6 +43,8 @@ export default function App() {
     window.addEventListener('touchmove', onTouchMove);
     window.addEventListener('touchend', onTouchUp);
 
+    document.body.classList.remove('loading');
+
     () => {
       window.removeEventListener('resize', onResize);
 

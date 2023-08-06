@@ -33,12 +33,12 @@ body {
 
 canvas {
   height: 100vh;
-  opacity: 0;
+  opacity: 1;
   transition: opacity 1s ease;
 }
 
-.loaded canvas {
-  opacity: 1;
+.loading canvas {
+  opacity: 0;
 }
 
 a {
@@ -84,12 +84,12 @@ FRAME
   gap: 15px;
   padding: 3rem;
   font-size: 15px;
-  opacity: 0;
+  opacity: 1;
   transition: opacity 0.4s ease;
 }
 
-.loaded .frame {
-  opacity: 1;
+.loading .frame {
+  opacity: 0;
 }
 
 @media screen and (min-width: 53rem) {
@@ -137,10 +137,9 @@ FRAME
 /* 
 Loader
 */
-body::after {
+.loading::after {
   content: '';
   position: fixed;
-  z-index: 1000;
   top: 50%;
   left: 50%;
   width: 60px;
@@ -150,12 +149,6 @@ body::after {
   opacity: 0.4;
   background: #545050;
   animation: loaderAnim 0.7s linear infinite alternate forwards;
-  transition: opacity 0.4s ease;
-}
-
-body.loaded::after {
-  animation-play-state: paused;
-  opacity: 0;
 }
 
 @keyframes loaderAnim {
